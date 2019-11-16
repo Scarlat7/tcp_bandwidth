@@ -24,7 +24,16 @@ s.listen(0)	# at most zero queued connections
 
 print("Listening on port {}".format(TCP_PORT))
 
+# Accepts a connection request
+conn, addr = s.accept()
+
+print("Connection accepted with address {}".format(addr))
+
 # Continues indefinitely, use CTRL+C to abort
-while(True):
-	#NOT_IMPLEMENTED_YET
-	pass;
+while True:
+
+	# Receives message from client
+	data = conn.recv(BUFFER_SIZE)
+
+# Closes connection, but it's unreacheable
+conn.close()

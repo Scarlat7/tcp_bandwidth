@@ -13,9 +13,9 @@ args = parser.parse_args()
 
 TCP_IP = 'localhost'
 TCP_PORT = args.port 
-BUFFER_SIZE = 1024
 DEFAULT_TIME = 120
 TIME =  DEFAULT_TIME if (args.time == None) else args.time
+MESSAGE = "X"*1024
 
 # Creates TCP socket (SOCK_STREAM) with AF_INET address family (host, port)
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -28,5 +28,9 @@ print("Connected to server {} on port {}".format(TCP_IP, TCP_PORT))
 start = t.time()
 
 while(t.time() - start < TIME):
-	#NOT_IMPLEMENTED_YET
-	pass;
+	
+	# Sends 1024 byte message
+	s.send(MESSAGE.encode())
+
+# Closes socket
+s.close()
