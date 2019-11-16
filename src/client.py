@@ -33,13 +33,18 @@ while(t.time() - start < TIME):
 	
 	encoded_msg = MESSAGE.encode()
 
+	start_inst = t.time()
+
 	# Sends 1024-byte message
 	s.send(encoded_msg)
 
 	data_sent += len(encoded_msg)
 
+	inst_speed = len(encoded_msg)/((t.time()-start_inst)*MEGA)
+	print("{} MB/s".format(inst_speed))
+
 print("Total data sent over {} seconds: {} bytes".format(TIME, data_sent))
-print("For an average of {} Mbytes/s".format(data_sent/(TIME*MEGA)))
+print("For an average of {} MB/s".format(data_sent/(TIME*MEGA)))
 
 # Closes socket
 s.close()
