@@ -11,6 +11,7 @@ parser.add_argument('-t', '--time', type=int, help='how long the test will run (
 
 args = parser.parse_args()
 
+MEGA = 2**20
 TCP_IP = 'localhost'
 TCP_PORT = args.port 
 DEFAULT_TIME = 120
@@ -26,11 +27,19 @@ s.connect((TCP_IP, TCP_PORT))
 print("Connected to server {} on port {}".format(TCP_IP, TCP_PORT))
 
 start = t.time()
+data_sent = 0
 
 while(t.time() - start < TIME):
 	
-	# Sends 1024 byte message
-	s.send(MESSAGE.encode())
+	encoded_msg = MESSAGE.encode()
+
+	# Sends 1024-byte message
+	s.send(encoded_msg)
+
+	data_sent += len(encoded_msg)
+
+print("Total data sent over {} seconds: {} bytes".format(TIME, data_sent))
+print("For an average of {} Mbytes/s".format(data_sent/(TIME*MEGA)))
 
 # Closes socket
 s.close()
