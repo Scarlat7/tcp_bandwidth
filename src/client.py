@@ -5,7 +5,6 @@ import argparse
 import time as t
 
 def client(args):
-	MEGA = 2**20
 	TCP_IP = 'localhost'
 	TCP_PORT = args.port 
 	DEFAULT_TIME = 120
