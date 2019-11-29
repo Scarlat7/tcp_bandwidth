@@ -4,7 +4,7 @@ import socket
 import argparse
 import time as t
 
-def client(args):
+def client(port, time):
 	TCP_IP = 'localhost'
 	TCP_PORT = args.port 
 	DEFAULT_TIME = 120
@@ -31,12 +31,3 @@ def client(args):
 
 	# Closes socket
 	s.close()
-
-if __name__ == "__main__":
-	parser = argparse.ArgumentParser(description='Client for bandwidth test.')
-	parser.add_argument('-p', '--port', type=int, help='server connection port', required=True)
-	parser.add_argument('-t', '--time', type=int, help='how long the test will run (in seconds)')
-
-	args = parser.parse_args()
-
-	client(args)

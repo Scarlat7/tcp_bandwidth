@@ -4,11 +4,10 @@ import socket
 import argparse
 import time as t
 
-
-def server(args):
+def server(port):
 	TCP_IP = 'localhost'
 	TCP_PORT = args.port 
-	BUFFER_SIZE = 1024
+	BUFFER_SIZE = 1024*1024	# 1 MB ==> 1024 messages from client
 
 	# Creates TCP socket (SOCK_STREAM) with AF_INET address family (host, port)
 	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -26,23 +25,30 @@ def server(args):
 
 	print("Connection accepted with address {}".format(addr))
 
+	# Log file name 
+	log_file = 'tcp_bandwidth_port_{}.log'.format(port)
+	fp = open(log_file, 'a')
+
+	total_data = 0
+	start = time()
+
 	# Actually continues until no more data is sent through the socket
 	while True:
 
 		# Receives message from client
 		data = conn.recv(BUFFER_SIZE)
+		total_data += data
 
 		if !data:
 			# Closes connection
 			conn.close()
 
+			# Closes log file
+			fp.close()
+
 			exit(0);
 
-if __name__ == "__main__":
-	parser = argparse.ArgumentParser(description='Client for bandwidth test.')
-	parser.add_argument('-p', '--port', type=int, help='server connection port', required=True)
-	parser.add_argument('-c', '--clients', type=int, help='number of parallel connections', required=True)
-
-	args = parser.parse_args()
-
-	server(args)
+		# Writes bandwidth to log file
+		stop = time()
+		bandwidth = total_data // (stop - start)
+		fp.write("{} B/s".format(bandwidth))
