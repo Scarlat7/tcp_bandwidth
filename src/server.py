@@ -6,8 +6,9 @@ import time as t
 
 def server(port):
 	TCP_IP = 'localhost'
-	TCP_PORT = args.port 
-	BUFFER_SIZE = 1024*1024	# 1 MB ==> 1024 messages from client
+	TCP_PORT = port
+	BUFFER_SIZE = 100*1024*1024	# 100 MB ==> 100K messages from client
+	MB = 2**20
 
 	# Creates TCP socket (SOCK_STREAM) with AF_INET address family (host, port)
 	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -27,19 +28,19 @@ def server(port):
 
 	# Log file name 
 	log_file = 'tcp_bandwidth_port_{}.log'.format(port)
-	fp = open(log_file, 'a')
+	fp = open(log_file, 'w')
 
-	total_data = 0
-	start = time()
+	start = t.time()
+	total_recv = 0
 
 	# Actually continues until no more data is sent through the socket
 	while True:
 
 		# Receives message from client
 		data = conn.recv(BUFFER_SIZE)
-		total_data += data
+		total_recv += len(data)
 
-		if !data:
+		if not data:
 			# Closes connection
 			conn.close()
 
@@ -49,6 +50,7 @@ def server(port):
 			exit(0);
 
 		# Writes bandwidth to log file
-		stop = time()
-		bandwidth = total_data // (stop - start)
-		fp.write("{} B/s".format(bandwidth))
+		stop = t.time()
+
+		bandwidth = total_recv // ((stop - start)*MB)
+		fp.write("{} MB/s\n".format(bandwidth))	

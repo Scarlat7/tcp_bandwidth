@@ -8,15 +8,15 @@ from time import sleep
 def coordinator(args):
 	port = args.port
 	threads = []
+	seconds = 5
 
-	for i in range(args.clients,0,-1):
-		threads.append(Thread(target = server, args = (port+i)))
-		threads.append(Thread(target = server, args = (port+i,i)))
+	for i in range(args.clients-1,-1,-1):
+		threads.append(Thread(target = server, args = [port+i]))
+		threads.append(Thread(target = client, args = [port+i, seconds]))
 
 	for i in range(args.clients):
 		threads[2*i].start()
 		threads[2*i+1].start()
-		sleep(1)
 
 if __name__ == "__main__":
 	parser = argparse.ArgumentParser(description='Coordinator for bandwidth test.')
@@ -25,4 +25,4 @@ if __name__ == "__main__":
 
 	args = parser.parse_args()
 
-	server(args)
+	coordinator(args)

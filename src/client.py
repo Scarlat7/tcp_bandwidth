@@ -6,10 +6,9 @@ import time as t
 
 def client(port, time):
 	TCP_IP = 'localhost'
-	TCP_PORT = args.port 
-	DEFAULT_TIME = 120
+	TCP_PORT = port
 	MSG_SIZE = 1024
-	TIME =  DEFAULT_TIME if (args.time == None) else args.time
+	TIME = time
 
 	# Creates TCP socket (SOCK_STREAM) with AF_INET address family (host, port)
 	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
