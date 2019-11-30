@@ -52,8 +52,8 @@ def server(port):
 		# Writes bandwidth to log file
 		stop = t.time()
 
-		if stop - start >= 1 :
-			bandwidth = (total_recv*8) // int(((stop - start)*MB))
+		if stop - start >= 1 : # 1 second
+			bandwidth = (total_recv*8) // int(((stop - start)*MB)) # 8 for byte->bit conversion
 			fp.write("{} Mbit/s\n".format(bandwidth))	
 
 			total_recv = 0
