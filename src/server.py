@@ -7,8 +7,8 @@ import time as t
 def server(port):
 	TCP_IP = 'localhost'
 	TCP_PORT = port
-	BUFFER_SIZE = 100*1024*1024	# 100 MB ==> 100K messages from client
 	MB = 2**20
+	BUFFER_SIZE = 100*MB
 
 	# Creates TCP socket (SOCK_STREAM) with AF_INET address family (host, port)
 	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -52,5 +52,9 @@ def server(port):
 		# Writes bandwidth to log file
 		stop = t.time()
 
-		bandwidth = total_recv // ((stop - start)*MB)
-		fp.write("{} MB/s\n".format(bandwidth))	
+		if stop - start >= 1 :
+			bandwidth = (total_recv*8) // int(((stop - start)*MB))
+			fp.write("{} Mbit/s\n".format(bandwidth))	
+
+			total_recv = 0
+			start = t.time()

@@ -26,7 +26,7 @@ def client(port, time):
 		start_inst = t.time()
 
 		# Sends 1024-byte message
-		s.send(b'X'*MSG_SIZE);
+		s.send(b'X'*MSG_SIZE)
 
 	# Closes socket
 	s.close()
