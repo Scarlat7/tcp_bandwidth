@@ -32,8 +32,8 @@ def graph(file):
 	ax = plt.axes(xlim=(0,int(len(data))), ylim=(0,int(max(data))))
 	line, = ax.plot([],[], lw=2)
 	ani = animation.FuncAnimation(fig, animate, init_func=init, frames=len(data), interval=1000, blit=True) # 1 second
-	#ani.save('experiment.gif', writer='imagemagick')
-	plt.show()
+	ani.save('../results/res_{}.gif'.format(file), writer='imagemagick')
+	#plt.show()
 
 if __name__ == "__main__":
 	parser = argparse.ArgumentParser(description='Plotter of bandwidth test.')
