@@ -22,17 +22,17 @@ def animate(frame):
 def graph(file):
 	global data, line, ax
 
-	plt.xlabel('Time (seconds)')
-	plt.ylabel('Bandwidth (Mbit/s)')
-	plt.title('TCP fairness experiment')
-
 	file_c = open(file,'r').read()
 	data = [int(x) for x in file_c.split(' Mbit/s\n') if x != '']
 
 	ax = plt.axes(xlim=(0,int(len(data))), ylim=(0,int(max(data))))
 	line, = ax.plot([],[], lw=2)
+
+	ax.set_xlabel('Time (seconds)')
+	ax.set_ylabel('Bandwidth (Mbit/s)')
+	ax.set_title('TCP fairness experiment')
 	ani = animation.FuncAnimation(fig, animate, init_func=init, frames=len(data), interval=1000, blit=True) # 1 second
-	ani.save('../results/res_{}.gif'.format(file), writer='imagemagick')
+	ani.save('../results/res_experiment.gif', writer='imagemagick')
 	#plt.show()
 
 if __name__ == "__main__":
