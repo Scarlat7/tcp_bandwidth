@@ -8,7 +8,8 @@ def server(port):
 	TCP_IP = 'localhost'
 	TCP_PORT = port
 	MB = 2**20
-	BUFFER_SIZE = 100*MB
+	KB = 2**10
+	BUFFER_SIZE = 10*KB
 
 	# Creates TCP socket (SOCK_STREAM) with AF_INET address family (host, port)
 	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
