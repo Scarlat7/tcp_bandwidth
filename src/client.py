@@ -4,8 +4,8 @@ import socket
 import argparse
 import time as t
 
-def client(port, time):
-	TCP_IP = 'localhost'
+def client(ip, port, time):
+	TCP_IP = ip
 	TCP_PORT = port
 	MSG_SIZE = 1024
 	TIME = time
